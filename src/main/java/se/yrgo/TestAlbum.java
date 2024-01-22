@@ -11,21 +11,32 @@ public class TestAlbum {
                 new Album("Best of", "Mozart", Album.Genre.CLASSICAL),
                 new Album("Thank you for the music", "ABBA", Album.Genre.POP)
         };
-        GenreFilter exclude = new ExcludeGenreFilter();
-        GenreFilter include = new IncludeGenreFilter();
+        AdvancedGenreFilter exclude = new ExcludeGenreFilter();
+        AdvancedGenreFilter include = new IncludeGenreFilter();
 
         //Exclude POP
         printAlbums(albums, exclude);
-
         System.out.println("-----");
+
         //Only POP
         printAlbums(albums, include);
 
+        //ONLY ROCK
+        System.out.println("-----");
+        printAlbums(albums, include, Album.Genre.ROCK.toString());
+
     }
 
-    static void printAlbums(Album[] albums, GenreFilter filter) {
+    static void printAlbums(Album[] albums, AdvancedGenreFilter filter) {
         for (Album a : albums) {
             if (filter.permit(a)) {
+                System.out.println(a);
+            }
+        }
+    }
+    static void printAlbums(Album[] albums, AdvancedGenreFilter filter, String genre) {
+        for (Album a : albums) {
+            if (filter.permit(a, genre)) {
                 System.out.println(a);
             }
         }
